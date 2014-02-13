@@ -16,9 +16,10 @@ include_once( dirname(__FILE__) . "/util/Security.php" );
 include_once( dirname(__FILE__) . "/util/FileCipher.php" );
 include_once( dirname(__FILE__) . "/object/CredentialAccessManager.php" );
 
-$paramsArr= AccessManager::exportArrayListFromKeystore(KEYSTORE);
+$paramsArr= AccessManager::exportToArray(KEYSTORE);
 
-echo "b";
+/* print_r($paramsArr); */
+/* exit; */
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
 
@@ -39,6 +40,8 @@ $scanner->addCommand(new QueryOratabFileCommand($serviceProvider));
 $scanner->addCommand(new AreOracleInstancesRunningCommand($serviceProvider));
 
 $dtoArray= $scanner->scan(); /* portata */
+
+print_r($dtoArray);
 
 $htmlReport=HostDTOFormatter::generateReport($dtoArray);
 $file = "/home/mpucci/Scrivania/report-fe.html";

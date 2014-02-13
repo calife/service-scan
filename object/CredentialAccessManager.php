@@ -17,7 +17,7 @@ interface CredentialAccessInterface {
 interface AccessManagerInterface {
   public static function addInstance(FileCipher $keystore,CredentialAccessInterface $credential);
   public static function removeInstance(FileCipher $keystore,CredentialAccessInterface $credential);
-  public static function exportArrayListFromKeystore($keystore);
+  public static function exportToArray($keystore);
 
 }
 
@@ -78,7 +78,10 @@ class AccessManager implements AccessManagerInterface {
 	echo " > ".__METHOD__." < ".PHP_EOL;
   }
 
-  public static function exportArrayListFromKeystore($keystore=null) {
+  /**
+   * Restituisce un array di CredentialAccessInterface
+   **/
+  public static function exportToArray($keystore=null) {
 
     $paramsArray=array();
 
