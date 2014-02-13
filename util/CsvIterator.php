@@ -1,6 +1,6 @@
 <?php
 
-require (dirname(__FILE__)."/FileCipher.php");
+require (dirname(__FILE__)."/Keystore.php");
 
 /* Methods */
 /* abstract public mixed current ( void ) */

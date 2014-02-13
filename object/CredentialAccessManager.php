@@ -1,6 +1,6 @@
 <?php
 
-require_once( dirname(__FILE__) . "/../util/FileCipher.php" );
+require_once( dirname(__FILE__) . "/../util/Keystore.php" );
 require_once( dirname(__FILE__) . "/../util/utils.php" );
 
 /**
@@ -15,8 +15,8 @@ interface CredentialAccessInterface {
 }
 
 interface AccessManagerInterface {
-  public static function addInstance(FileCipher $keystore,CredentialAccessInterface $credential);
-  public static function removeInstance(FileCipher $keystore,CredentialAccessInterface $credential);
+  public static function addInstance(Keystore $keystore,CredentialAccessInterface $credential);
+  public static function removeInstance(Keystore $keystore,CredentialAccessInterface $credential);
   public static function exportToArray($keystore);
 
 }
@@ -69,12 +69,12 @@ class CredentialAccess implements CredentialAccessInterface {
 class AccessManager implements AccessManagerInterface {
 
   // TODO: aggiunge un' istanza CredentialAccessInterface al keystore
-  public static function addInstance(FileCipher $keystore,CredentialAccessInterface $instance) {
+  public static function addInstance(Keystore $keystore,CredentialAccessInterface $instance) {
 	echo " > ".__METHOD__." < ".PHP_EOL;	
   }
 
   // TODO: elimina un' istanza CredentialAccessInterface dal keystore
-  public static function removeInstance(FileCipher $keystore,CredentialAccessInterface $instance) {
+  public static function removeInstance(Keystore $keystore,CredentialAccessInterface $instance) {
 	echo " > ".__METHOD__." < ".PHP_EOL;
   }
 
@@ -87,7 +87,7 @@ class AccessManager implements AccessManagerInterface {
 
 	if( ! is_null($keystore) ) {
 
-	  $keystoreManager= new FileCipher($keystore);
+	  $keystoreManager= new Keystore($keystore);
 	  $clearData= $keystoreManager->exportKeystore();
 
 	  $rows=explode(PHP_EOL, $clearData);

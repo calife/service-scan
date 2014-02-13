@@ -3,7 +3,7 @@
 require (dirname(__FILE__)."/Cipher.php");
 require (dirname(__FILE__)."/Prompt.php");
 
-class FileCipher {
+class Keystore {
 
   private $keystore=null;
 
@@ -12,7 +12,7 @@ class FileCipher {
   }
 
   /**
-   * Popola il keystore con il contenuto di $clearfile dopo averlo criptato
+   * Crea un oggetto keystore importando il contenuto di $clearfile dopo averlo criptato
    **/
   public function importKeystore($clearfile) {
 	$result;

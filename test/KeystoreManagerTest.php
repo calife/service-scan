@@ -1,10 +1,12 @@
 <?php
 
-require(dirname(__FILE__)."/../util/FileCipher.php");
+require(dirname(__FILE__)."/../util/Keystore.php");
 require(dirname(__FILE__)."/conf/apptest.conf");
 
-$keystoreManager= new FileCipher(KEYSTORE);
+$keystoreManager= new Keystore(KEYSTORE);
 
+// echo "Importing keystore: ".CLEARTEXTFILE." ".PHP_EOL;
 $keystoreManager->importKeystore(CLEARTEXTFILE);
 
-$keystoreManager->exportKeystore();
+// echo "Exporting keystore: ".KEYSTORE." ".PHP_EOL;
+echo $keystoreManager->exportKeystore();

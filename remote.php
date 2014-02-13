@@ -13,7 +13,7 @@ include_once( dirname(__FILE__) . "/object/Command.php" );
 include_once( dirname(__FILE__) . "/object/DTOFormatter.php" );
 include_once( dirname(__FILE__) . "/util/utils.php" );
 include_once( dirname(__FILE__) . "/util/Security.php" );
-include_once( dirname(__FILE__) . "/util/FileCipher.php" );
+include_once( dirname(__FILE__) . "/util/Keystore.php" );
 include_once( dirname(__FILE__) . "/object/CredentialAccessManager.php" );
 
 $paramsArr= AccessManager::exportToArray(KEYSTORE);
@@ -46,6 +46,3 @@ print_r($dtoArray);
 $htmlReport=HostDTOFormatter::generateReport($dtoArray);
 $file = "/home/mpucci/Scrivania/report-fe.html";
 $result=file_put_contents($file, $htmlReport);
-
-
-
