@@ -1,35 +1,111 @@
+#!/usr/bin/php
 <?php
 
-require_once( dirname(__FILE__) . "/../util/Keystore.php" );
+include_once( dirname(__FILE__) . "/../object/CredentialAccessManager.php" );
 
-/**
- * Tool di gestione del keystore
- * Permette le operazioni di import/export del keystore da riga di comando
- * 
- * Keytool Commands for Creating and Importing
+interface ICommandLineParser {
 
- * Keytool Commands for Checking:
+  static function help(); /* Stampa l' help */
+  static function processCmdLine(array $options); /* Processa la command line */
 
-     Check which certificates are in a keystore
-     keytool -list -v -keystore keystore.jks
+}
 
- * Other Keytool Commands
+class Keytool implements ICommandLineParser {
 
-     Delete a certificate from a Java Keytool keystore
-        keytool -delete -alias "mydomain" -keystore keystore.jks
+  public static function processCmdLine(array $options) /* command dispatcher */ {
 
-     Change a Java keystore password
-        keytool -storepasswd -new new_storepass -keystore keystore.jks
+	if (is_array($options) ) {
+	  
+	  if(isset($options['help'])) {	/* help */
+		self::help(); exit;
+	  }
 
-     Export a certificate from a keystore
-        keytool -export -alias mydomain -file mydomain.crt
+	  switch ($options['action']) {
 
- **/
-class Keytool {
+	  case 'create':				/* create */
+		if ( isset($options['keystore']) && isset($options['clearfile']) ) {
+		  AccessManager::create($options['keystore'],$options['clearfile']);
+		  break;
+		} else { self::help(); exit; }
 
-  //TODO: implementare il comando process per la gestione della CLI
-  public function process(array $args=null) {
+	  case 'delete':				/* delete */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::delete($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'show':				    /* show */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::show($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'export':				/* export */
+		if ( isset($options['keystore']) && isset($options['clearfile']) ) {
+		  AccessManager::export($options['keystore'],$options['clearfile']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'changekeypasswd':		/* changekeypasswd */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::changekeypasswd($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'addentry':				/* addentry */
+		if ( isset($options['keystore']) && isset($options['entry']) ) {
+		  AccessManager::addentry($options['keystore'],$options['entry']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'removeentry':			/* removeentry */
+		if ( isset($options['keystore']) && isset($options['entry']) ) {
+		  AccessManager::removeentry($options['keystore'],$options['entry']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'help':					/* help */
+		self::help(); exit;
+
+	  default:						/* default */
+		self::help(); exit;
+
+	  }
+	} else { die("Error while parsing arguments"); }
+}
+
+  static function help() /* -help */ {
+
+	$helpStr = <<<EOT
+
+  Utilizzo Keytool:
+
+      --help
+      --action create  --keystore <keystore> --clearfile <clearfile>
+      --action delete  --keystore <keystore>
+      --action show  --keystore <keystore>
+      --action export  --keystore <keystore> --clearfile <clearfile>
+      --action changekeypasswd   --keystore <keystore>
+      --action addentry  --keystore <keystore> --entry entry
+      --action removeentry  --keystore <keystore> --entry entry
+      --action help
+
+
+EOT;
+
+	print $helpStr;
 
   }
 
 }
+
+$longopts  = array(
+    "action:", // required
+    "keystore:",
+    "clearfile:",
+    "entry:",
+    "help"
+);
+
+$options = getopt(null,$longopts);
+Keytool::processCmdLine($options);
