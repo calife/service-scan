@@ -1,4 +1,5 @@
 #!/usr/bin/php
+
 <?php
 
 include_once( dirname(__FILE__) . "/../object/CredentialAccessManager.php" );
@@ -64,10 +65,28 @@ class Keytool implements ICommandLineParser {
 		  break;
 		} else { self::help(); exit; }
 
-	  case 'help':					/* help */
+	  case 'verify':				    /* verify */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::verify($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'sort':				    /* sort */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::sort($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'removedup':			   /* removedup */
+		if ( isset($options['keystore']) ) {
+		  AccessManager::removedup($options['keystore']);
+		  break;
+		} else { self::help(); exit; }
+
+	  case 'help':				  /* help */
 		self::help(); exit;
 
-	  default:						/* default */
+	  default:					  /* default */
 		self::help(); exit;
 
 	  }
@@ -86,10 +105,12 @@ class Keytool implements ICommandLineParser {
       --action show  --keystore <keystore>
       --action export  --keystore <keystore> --clearfile <clearfile>
       --action changekeypasswd   --keystore <keystore>
-      --action addentry  --keystore <keystore> --entry entry
-      --action removeentry  --keystore <keystore> --entry entry
+      --action addentry  --keystore <keystore> --entry <entry>
+      --action removeentry  --keystore <keystore> --entry <entry>
+      --action verify --keystore <keystore>
+      --action sort --keystore <keystore>
+      --action removedup --keystore <keystore>
       --action help
-
 
 EOT;
 

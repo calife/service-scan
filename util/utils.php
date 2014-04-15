@@ -47,6 +47,7 @@ function ipcompare($ip1,$ip2) {
 	
 **/
 function my_sort_array_by_ip($tmp) {
+
   usort($tmp, function($a,$b) {
 	  return ipcompare($a['ip'],$b['ip']);
 	});
@@ -55,10 +56,29 @@ function my_sort_array_by_ip($tmp) {
 }
 
 function my_unique_array_by_ip($in) {
+
   $tmp=array();
   foreach ($in as $row)
     if (!in_array($row,$tmp)) 
 	  array_push($tmp,$row);
 
   return $tmp;
+}
+
+
+function my_find_dup_by_ip($in) {
+
+  $exists = array();
+  $duplicates = array();
+
+  foreach ($in as $row) {
+	if (in_array($row,$exists) &&  !in_array($row,$duplicates)) {
+	  $duplicates[] = $row;
+	} else {
+	  $exists[] = $row;
+	}
+  }
+
+  return $duplicates;
+
 }

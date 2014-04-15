@@ -94,7 +94,7 @@ class TripleDesCipher implements ICipher {
 
 	  try {
 
-		$this->decrypt($crypttext,$textkey);
+		self::decrypt($crypttext,$textkey);
 
       } catch(Exception $exp) {
 		return FALSE;

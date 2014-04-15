@@ -18,6 +18,9 @@ include_once( dirname(__FILE__) . "/object/CredentialAccessManager.php" );
 
 $paramsArr= AccessManager::exportToArray(KEYSTORE);
 
+// print_r($paramsArr);
+//exit;
+
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
 
 $scanner=new ServiceScanner($paramsArr,$serviceProvider); /* invoker , il cameriere */
