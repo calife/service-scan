@@ -9,6 +9,8 @@ function notEmpty($val) {
   return $val!=="";
 }
 
+
+
 function arrayPrint(array $arr) {
   if(count($arr)===0) {
 	echo "No instance running".PHP_EOL;

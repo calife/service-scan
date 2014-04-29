@@ -340,7 +340,8 @@ class QueryOratabFileCommand  extends AbstractCommand {
 
   public function perform(IDTO $dto=null) {
 
-	$oracleSidArray = array_filter(explode(PHP_EOL,$this->serviceProvider->exec(self::COMMAND_QUERY_ORATAB_FILE)),"notEmpty");
+	$tempArr=array_map("trim",explode(PHP_EOL,$this->serviceProvider->exec(self::COMMAND_QUERY_ORATAB_FILE)));
+	$oracleSidArray = array_filter($tempArr,"notEmpty");
 
 	foreach($oracleSidArray as $oratabEntry) {
 
