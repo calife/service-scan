@@ -1,7 +1,7 @@
 <?php
 
-require_once( dirname(__FILE__) . "/../util/Keystore.php" );
-require_once( dirname(__FILE__) . "/../util/utils.php" );
+require_once( dirname(__FILE__) . "/../../util/Keystore.php" );
+require_once( dirname(__FILE__) . "/../../util/Utils.php" );
 
 /**
  * Interfaccia di definizione delle operazioni per la gestione delle liste delle istanze

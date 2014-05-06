@@ -2,7 +2,7 @@
 
 <?php
 
-include_once( dirname(__FILE__) . "/../object/CredentialAccessManager.php" );
+include_once( dirname(__FILE__) . "/../object/logic/CredentialAccessManager.php" );
 
 interface ICommandLineParser {
 

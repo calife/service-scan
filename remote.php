@@ -7,16 +7,17 @@
 
 require_once( dirname(__FILE__) . "/conf/app.conf" );
 
-include_once( dirname(__FILE__) . "/object/ServiceProvider.php" );
-include_once( dirname(__FILE__) . "/object/ServiceScanner.php" );
-include_once( dirname(__FILE__) . "/object/Command.php" );
-include_once( dirname(__FILE__) . "/object/DTOFormatter.php" );
-include_once( dirname(__FILE__) . "/util/utils.php" );
+include_once( dirname(__FILE__) . "/object/logic/ServiceProvider.php" );
+include_once( dirname(__FILE__) . "/object/logic/ServiceScanner.php" );
+include_once( dirname(__FILE__) . "/object/logic/Command.php" );
+include_once( dirname(__FILE__) . "/object/logic/DTOFormatter.php" );
+include_once( dirname(__FILE__) . "/util/Utils.php" );
 include_once( dirname(__FILE__) . "/util/Security.php" );
 include_once( dirname(__FILE__) . "/util/Keystore.php" );
-include_once( dirname(__FILE__) . "/object/CredentialAccessManager.php" );
+include_once( dirname(__FILE__) . "/object/logic/CredentialAccessManager.php" );
 
-$paramsArr= AccessManager::exportToArray(KEYSTORE);
+// $paramsArr= AccessManager::exportToArray(KEYSTORE);
+$paramsArr= AccessManager::exportToArray(KEYSTORE_TEST);
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
 

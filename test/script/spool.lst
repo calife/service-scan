@@ -1,0 +1,56 @@
+old   1: CREATE USER phpins IDENTIFIED BY "&PASS"
+new   1: CREATE USER phpins IDENTIFIED BY "1234efm"
+
+User created.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+
+Grant succeeded.
+
+******  Creating HOSTS table ....
+
+Table created.
+
+******  Creating GENERIC INSTANCES table ....
+
+Table created.
+
+******  Creating HOSTS TO INSTANCES table ....
+
+Table created.
+
+
+Table altered.
+
+
+Table altered.
+
+******  Creating FE_INSTANCES table ....
+
+Table created.
+
+******  Creating BE_INSTANCES table ....
+
+Table created.
+
+
+Sequence created.
+
+
+Trigger created.
+
+
+Sequence created.
+
+
+Trigger created.
+
+******  QUITTING  ....

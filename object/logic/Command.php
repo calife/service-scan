@@ -1,6 +1,7 @@
 <?php
 
-include "Entity.php";
+require_once ( dirname(__FILE__) . "/../model/Entity.php");
+// include_once ( dirname(__FILE__) . "/../util/Utils.php");
 
 /**
  * Classe astratta di definizione dei comandi eseguibile dal receiver (GenericServiceProvider)

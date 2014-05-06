@@ -1,9 +1,9 @@
 <?php
 
-include_once "../conf/app.conf";
-include_once "../conf/auth.conf";
-include_once "../util/utils.php";
-include_once "Dto.php";
+include_once ( dirname(__FILE__) . "/../../conf/app.conf");
+include_once ( dirname(__FILE__) . "/../../conf/auth.conf");
+include_once ( dirname(__FILE__) . "/../../util/Utils.php");
+include_once ( dirname(__FILE__) . "/../model/Dto.php");
 
 /**
  * Invoker class for the command pattern implementation.
