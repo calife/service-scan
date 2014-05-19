@@ -5,6 +5,7 @@ require_once ( dirname(__FILE__) . "/../model/Entity.php");
 
 /**
  * Classe astratta di definizione dei comandi eseguibile dal receiver (GenericServiceProvider)
+ * I comandi vengono eseguiti sul IDTO object
  **/
 abstract class AbstractCommand {
 

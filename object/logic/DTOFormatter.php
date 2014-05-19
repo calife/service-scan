@@ -23,7 +23,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
 
 	$title=($type===self::FE?"eFM Frontend Report":"eFM Backend Report");
 
-	$str;
+	$str="";
 	$str.="<div style=\"width:90%;\" >";
 	$str.="<p style=\" font-size:20px;font-weight:bold;color:".self::runningNow."\">".$title;
     $str.="<span style=\" \">   [";
@@ -52,7 +52,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
   }
 
   protected static function printLegend($type) {
-	$str;
+	$str="";
 	$str.="<div>";
 	$str.="<table width=\"15%\" style=\"font-size:6pt;border:1px solid black;margin-bottom:20px; \">";
 	$str.="<tr><th colspan=\"2\" align=\"center\">Legend</th></tr>";
@@ -66,6 +66,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
   }
 
   protected static function printHTMLTableHeader($type) {
+	$str="";
 	$str.="<thead>";
 	$str.="<tr>";
 	$str.="<th>Network address</th>";
@@ -95,7 +96,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
 
 	$currentDate=date("F j, Y, g:i a");
 
-	$str;
+	$str="";
 	$str.="<hr/>";
 	$str.='<div id="footer" >';
 	$str.="<h5><font face=\"Helvetica, Arial, Sans Serif\" size=\"-1\"><b>";
@@ -114,15 +115,15 @@ class HostDTOFormatter implements AbstractDTOFormatter {
    * Required: $instances e' la lista di tutte le istanze  di un solo tipo (fe|be)
    * Return: la stringa html formattata.
    **/
-  private function formatFe(array $instances,$networkAddress,$hostname,$currentDate) {
+  private static function formatFe(array $instances,$networkAddress,$hostname,$currentDate) {
 
-	$str;
 
 	$numinstances=count($instances);
 
 	if($numinstances) {
 	  $counter=1;
 
+	  $str="";
 	  $str.="<tbody>";
 	  foreach($instances as $instance) {
 
@@ -166,14 +167,14 @@ class HostDTOFormatter implements AbstractDTOFormatter {
    * Required: $instances e' la lista di tutte le istanze  di un solo tipo (fe|be)
    * Return: la stringa html formattata.
    **/
-  private function formatBe(array $instances,$networkAddress,$hostname,$currentDate) {
-	$str;
+  private static function formatBe(array $instances,$networkAddress,$hostname,$currentDate) {
 
 	$numinstances=count($instances);
 
 	if($numinstances) {
 	  $counter=1;
 
+	  $str="";
 	  $str.="<tbody>";
 	  foreach($instances as $instance) {
 
@@ -206,8 +207,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
    **/
   protected static function printDTO(IDTO $dto,$type) {
 
-
-	$str;
+	$str="";
 
 	if($dto instanceof HostDTO) {
 
@@ -232,8 +232,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
 
   protected static function printHTMLTableBody($dtos,$type) {
 
-	$str;
-
+	$str="";
 	if(is_array($dtos)) /* se e' un array stampa tutti in dto contenuti */ {
 
 	  foreach($dtos as $dto)
@@ -249,8 +248,7 @@ class HostDTOFormatter implements AbstractDTOFormatter {
 
   public static function toHTML($dtos) {
 
-	$str;
-
+	$str="";
 	$str.='<html>';
 	$str.='<head><title>Service Report</title></head>';
 	$str.='<body vlink="blue" link="blue">';

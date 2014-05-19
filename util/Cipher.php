@@ -40,10 +40,12 @@ class TripleDesCipher implements ICipher {
 	 **/
     public static function encrypt($plaintext,$textkey) {
 
-	  self::$securekey = hash('sha256',$textkey,TRUE);
 
 	  $td = mcrypt_module_open(self::CYPHER, '', self::MODE, '');
+	  $securekeysize=mcrypt_enc_get_key_size($td);
 	  $iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
+	  self::$securekey = substr(hash('sha256',$textkey,TRUE),0,$securekeysize);
+
 	  mcrypt_generic_init($td, self::$securekey , $iv);
 	  $md5=md5($plaintext);
 	  $crypttext = mcrypt_generic($td, $plaintext.$md5);
@@ -60,13 +62,17 @@ class TripleDesCipher implements ICipher {
 	 **/
     public static function decrypt($crypttext,$textkey) {
 
-	  self::$securekey = hash('sha256',$textkey,TRUE);
+	  //	  self::$securekey = hash('sha256',$textkey,TRUE);
 
 	  $crypttext = base64_decode($crypttext);
 
 	  $plaintext = '';
 	  $td = mcrypt_module_open(self::CYPHER, '', self::MODE, '');
 	  $ivsize = mcrypt_enc_get_iv_size($td);
+	  $securekeysize=mcrypt_enc_get_key_size($td);
+
+	  self::$securekey = substr(hash('sha256',$textkey,TRUE),0,$securekeysize);
+
 	  $iv = substr($crypttext, 0, $ivsize);
 	  $crypttext = substr($crypttext, $ivsize);
 

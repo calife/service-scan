@@ -7,43 +7,58 @@ interface IDTO {
 /**
  * Data transfer object (DTO)[1][2] is an object that carries data between processes.
  * http://en.wikipedia.org/wiki/Data_transfer_object
+ * Il NewHostDTO mappa 1 ad 1 un HostEntity
  **/
 class HostDTO implements IDTO {
-  protected $networkAddress;
-  protected $hostname;
-  protected $currentDate; /* System Date */
-  protected $instanceList; /* GenericInstanceEntity [0..n] */
+
+  protected $hostEntity;
 
   public function __construct($networkAddress) {
-	$this->networkAddress=$networkAddress;
+	$this->hostEntity= new HostEntity($networkAddress);
+  }
+
+  public function getHostEntity() {
+	return $this->hostEntity;
+  }
+
+  public function setHostEntity($entity) {
+	$this->hostEntity=$entity;
+  }
+
+  public function getHostId() {
+	return $this->hostEntity->getHostId();
+  }
+
+  public function setHostId($hostId) {
+	$this->hostEntity->setHostId($hostId);
   }
 
   public function getNetworkAddress() {
-	return $this->networkAddress;
+	return $this->hostEntity->getNetworkAddress();
   }
 
   public function setNetworkAddress($networkAddress) {
-	$this->networkAddress=$networkAddress;
+	$this->hostEntity->setNetworkAddress($networkAddress);
   }
 
   public function setHostname($hostname) {
-	$this->hostname=$hostname;
+	$this->hostEntity->setHostname($hostname);
   }
 
   public function getHostname() {
-	return $this->hostname;
+	return $this->hostEntity->getHostname();
   }
 
   public function setCurrentDate($currentDate) {
-	$this->currentDate=$currentDate;
+	$this->hostEntity->setCurrentDate($currentDate);
   }
 
   public function getCurrentDate() {
-	return $this->currentDate;
+	return $this->hostEntity->getCurrentDate();
   }
 
   public function getAllInstancesList() {
-	return $this->instanceList;
+	return $this->hostEntity->getInstanceList();
   }
 
  public function getFeInstancesList() {
@@ -52,7 +67,9 @@ class HostDTO implements IDTO {
 		return ($var instanceof FrontendInstanceEntity);
 	  }
 	}
-	return array_filter($this->getAllInstancesList(),"filtraFe");
+	if(is_array($this->getAllInstancesList()))
+	  return array_filter($this->getAllInstancesList(),"filtraFe");
+	else return array();
   }
 
  public function getBeInstancesList() {
@@ -61,11 +78,13 @@ class HostDTO implements IDTO {
 		return ($var instanceof BackendInstanceEntity);
 	  }
 	}
-	return array_filter($this->getAllInstancesList(),"filtraBe");
+	if(is_array($this->getAllInstancesList()))
+	  return array_filter($this->getAllInstancesList(),"filtraBe");
+	else return array();
   }
 
   public function addInstance(GenericInstanceEntity $instance) {
-	$this->instanceList[]= $instance;
+	$this->hostEntity->addInstance($instance);
   }
 
   public function __toString() {

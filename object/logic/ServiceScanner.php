@@ -103,6 +103,7 @@ class ServiceScanner implements IScanner {
   }
 
   public function executeCommands(IDTO $dto) {
+	$result="";
 	foreach($this->commands as $command) {
 	  $result.= $command->perform($dto);
 	  $result.=PHP_EOL;

@@ -5,6 +5,7 @@
  **/
 abstract class GenericInstanceEntity {
   protected $instanceName;
+  protected $instanceId;
 
   public function __construct($instanceName) {
 	$this->instanceName=$instanceName;
@@ -18,8 +19,35 @@ abstract class GenericInstanceEntity {
 	$this->instanceName=$instanceName;
   }
 
+  public function getInstanceId() {
+	return "{$this->instanceId}";
+  }
+
+  public function setInstanceId($instanceId) {
+	$this->instanceId=$instanceId;
+  }
+
   public function __toString() {
 	return "Instance Name: ".$this->getInstanceName();
+  }
+
+}
+
+
+class InstancesEntity extends GenericInstanceEntity {
+  protected $instanceId;
+
+  public function __construct($instanceId) {
+	$this->instanceName;
+  }
+
+}
+
+class InstancesHostsEntity extends GenericInstanceEntity {
+
+  public function __construct($instanceId,$instanceName) {
+	$this->instanceId=$instanceId;
+	$this->instanceName=$instanceName;
   }
 
 }
@@ -34,9 +62,9 @@ class FrontendInstanceEntity extends GenericInstanceEntity {
   protected $catalinaHome; /* es. /usr/local/tomcat6/  */
   protected $isRunning; /* Instance running: true or false */
   protected $existsDeploy; /* Verifica che il deploy esista */
-  protected $javaCmdLine;
-  protected $tcpIpPortsArray;
-  protected $beInstanceArray;
+  protected $javaCmdLine; /* Java CmdLine del processo */
+  protected $tcpIpPortsArray; /* Array delle porte utilizzate dal FE */
+  protected $beInstanceArray; /* Array delle istanze di BE collegate al FE */
 
   public function __construct($instanceName) {
 	parent::__construct($instanceName);
@@ -109,6 +137,7 @@ class FrontendInstanceEntity extends GenericInstanceEntity {
 
   /**
    * Funzione utility di stampa
+   * Ritorna una stringa con l' opzione -D passata alla jvm
    **/
   public function getJavaPropertyFromJavaCmdLine($property) {
 
@@ -121,7 +150,7 @@ class FrontendInstanceEntity extends GenericInstanceEntity {
 	  function getJavaProperty($subject,$pat) {
 		$pattern = '/'.$pat.'[^\s]*\s/';
 		preg_match($pattern, $subject, $matches);
-		return $matches[0];
+		return (sizeof($matches)?$matches[0]:"");
 	  }
 
     }
@@ -200,3 +229,64 @@ class BackendInstanceEntity extends GenericInstanceEntity {
   }
 
 }
+
+class HostEntity {
+
+  protected $hostId;
+  protected $networkAddress;
+  protected $hostname;
+  protected $currentDate; /* System Date */
+  protected $instanceList; /* GenericInstanceEntity [0..n] */
+
+  public function __construct($networkAddress) {
+	$this->networkAddress=$networkAddress;
+  }
+
+  public function getHostId() {
+	return $this->hostId;
+  }
+
+  public function getNetworkAddress() {
+	return $this->networkAddress;
+  }
+
+  public function getHostname() {
+	return $this->hostname;
+  }
+
+  public function getCurrentDate() {
+	return $this->currentDate;
+  }
+
+  public function getInstanceList() {
+	return $this->instanceList;
+  }
+
+  public function setHostId($hostId) {
+	$this->hostId=$hostId;
+  }
+
+  public function setNetworkAddress($networkAddress) {
+	$this->networkAddress=$networkAddress;
+  }
+
+  public function setHostname($hostname) {
+	$this->hostname=$hostname;
+  }
+
+  public function setCurrentDate($currentDate) {
+	$this->currentDate=$currentDate;
+  }
+
+  public function setInstanceList(array $instanceList) /* array di GenericInstanceEntity */ {
+	$this->instanceList=$instanceList;
+  }
+
+
+  public function addInstance(GenericInstanceEntity $instance) {
+	$this->instanceList[]= $instance;
+  }
+
+}
+
+

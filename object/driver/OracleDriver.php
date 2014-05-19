@@ -1,7 +1,10 @@
 <?php
  
 /**
- * ConnectionManager.php: Database class using the PHP OCI8 extension
+ * OracleDriver.php: Database class using the PHP OCI8 extension
+ * Scopo del driver è quello di fornire la connessione ed i metodi che la utilizzano per accedere alla base dati Oracle
+ * @author Pucci
+ * @date mercoledì, 07. maggio 2014
  */
 
 include_once( dirname(__FILE__) . "/conf/settings.inc" ); /* settings relativi al timezone, locales, etc ... */
@@ -11,12 +14,12 @@ error_reporting(E_ALL|E_STRICT);
 /**
  * Oracle Database access methods
  */
-class ConnectionManager {
+class OracleDriver {
  
     protected $conn = null; /* The connection resource */
     protected $stmtid = null; /* The statement resource identifier */
-    protected $prefetch = 100; /* The number of rows to prefetch with queries */
 
+    protected $prefetch = 100; /* The number of rows to prefetch with queries */
 	protected $autoCommit;
 	protected $internalDebug;
 	protected $clientIdentifier;
@@ -26,7 +29,7 @@ class ConnectionManager {
 	/**
      * Constructor Does NOT opens a connection to the database!!!
      */
-    function __construct($autoCommit = FALSE , $internalDebug = TRUE , $clientIdentifier = CLIENT_IDENTIFIER , $moduleName = MODULE_NAME, $charset = CHARSET) {
+    public function __construct($autoCommit = FALSE , $internalDebug = TRUE , $clientIdentifier = CLIENT_IDENTIFIER , $moduleName = MODULE_NAME, $charset = CHARSET) {
 
 	  $this->autoCommit = $autoCommit;
 	  $this->internalDebug = $internalDebug;
@@ -38,24 +41,29 @@ class ConnectionManager {
 
 	/**
 	 * Open a connection to the database
-    * @param string $host
-    * @param string $user
-    * @param string $pass
-    * @param int $type (ORA_CONNECTION_TYPE_DEFAULT, ORA_CONNECTION_TYPE_NEW, ORA_CONNECTION_TYPE_PERSISTENT)
-    * @return bool
-	 */
-	/* function connect($host = CONNECTION_STRING , $user = ORA_CON_USERNAME , $pass = ORA_CON_PW , $type = ORA_CONNECTION_TYPE_DEFAULT ) { */
-	function connect($host , $user , $pass , $type ) {
+     * @param string $host
+     * @param string $user
+     * @param string $pass
+     * @param int $type (ORA_CONNECTION_TYPE_CONNECT, ORA_CONNECTION_TYPE_NEW_CONNECT, ORA_CONNECTION_TYPE_PCONNECT)
+     * @return bool
+	 **/
+	function connect($host , $user , $pass , $type = ORA_CONNECTION_TYPE_CONNECT ) {
+
+	  if(is_resource($this->conn))
+		echo "Connection already exists. ".PHP_EOL;
 
       switch ($type) {
-          case ORA_CONNECTION_TYPE_PERSISTENT:
+          case ORA_CONNECTION_TYPE_PCONNECT:
 			$this->conn = @oci_pconnect($user, $pass, $host, $this->charset); 
 			break;
-          case ORA_CONNECTION_TYPE_NEW:
+          case ORA_CONNECTION_TYPE_NEW_CONNECT:
 			$this->conn = @oci_new_connect($user, $pass, $host, $this->charset); 
 			break;
+          case ORA_CONNECTION_TYPE_CONNECT:
+			$this->conn = @oci_connect($user, $pass, $host, $this->charset);
+			break;
           default: 
-              $this->conn = @oci_connect($user, $pass, $host, $this->charset);
+			$this->conn = @oci_connect($user, $pass, $host, $this->charset);
       }   
 
 	  if (is_resource($this->conn)) {
@@ -73,12 +81,20 @@ class ConnectionManager {
 
 	private function parseStmt($sql) {
 
-	  $this->stmtid = @oci_parse($this->conn, $sql);
+	  if (is_resource($this->conn)) {
 
-	  if (!is_resource($this->stmtid)) {
+		$this->stmtid = @oci_parse($this->conn, $sql);
+
+		if (!is_resource($this->stmtid)) {
+		  $e = oci_error();
+		  trigger_error('Could not parse statement: '. $e['message'], E_USER_ERROR);
+		}
+
+	  } else {
 		$e = oci_error();
-		trigger_error('Could not parse statement: '. $e['message'], E_USER_ERROR);
-	  }
+		trigger_error('Could not connect to database: '. $e['message'],E_USER_ERROR);
+     }
+
     }
 
 	private function bindParameters($params = array()) {
@@ -130,7 +146,7 @@ class ConnectionManager {
     }
 
     /**
-    * Gets the number of columns in the given statement. 
+    * Gets the number of columns in the given statement.
     * 
     * @param resource $statement
     * @return int
@@ -268,7 +284,7 @@ class ConnectionManager {
     /**
      * Destructor closes the statement and connection
      */
-    function __destruct() {
+    public function __destruct() {
 
 	  if (is_resource($this->stmtid))
 		  oci_free_statement($this->stmtid);
@@ -276,6 +292,10 @@ class ConnectionManager {
 	  if (is_resource($this->conn))
 		  oci_close($this->conn);
     }
+
+	public function close() {
+	  $this->__destruct();
+	}
 
 	public function __toString() {
 	  print_r($this->conn);
