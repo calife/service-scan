@@ -16,23 +16,38 @@ interface AbstractServiceScanDatabaseManager {
 
 class ServiceScanOracleManager implements AbstractServiceScanDatabaseManager {
 
-  public static function writeToDatabase(array $dtos=array()) {
-	echo __CLASS__." ".__METHOD__.PHP_EOL;
+  /**
+   * Scrittura dell' array dto sul database
+   **/
+  public static function writeToDatabase(array $dtoArray=array()) {
 
 	$daoFactory = OracleDaoFactory::getInstance(); /* Esegue il caricamento del driver */
 	$daoFactory->connect(CONNECTION_STRING , ORA_CON_USERNAME , ORA_CON_PW , ORA_CONNECTION_TYPE_CONNECT);  /* Ottiene una connessione da passare al dao */
 
-	// TODO implementare la logica di scrittura attraverso i dao
+	$hostDao=$daoFactory::getDao("OracleHostsDao");
 
+	$hostDao->clean();
 
+	foreach($dtoArray as $dto) {
+	  $ent=DTO2EntityConverter::fromDTO($dto);
+	  $hostDao->insert($ent);
+
+	}
 
   }
 
+  /**
+   * Lettera dal database 
+   **/
   public static function loadFromDatabase() {
-	echo __CLASS__." ".__METHOD__.PHP_EOL;
 
+	$daoFactory = OracleDaoFactory::getInstance(); /* Esegue il caricamento del driver */
+	$daoFactory->connect(CONNECTION_STRING , ORA_CON_USERNAME , ORA_CON_PW , ORA_CONNECTION_TYPE_CONNECT);  /* Ottiene una connessione da passare al dao */
 
-	$factory = OracleDaoFactory::getInstance();
+	$hostDao=$daoFactory::getDao("OracleHostsDao");
+
+	$dtoArray=$hostDao->queryAll();
+
 	return array();
   }
 

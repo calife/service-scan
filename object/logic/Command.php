@@ -1,7 +1,6 @@
 <?php
 
 require_once ( dirname(__FILE__) . "/../model/Entity.php");
-// include_once ( dirname(__FILE__) . "/../util/Utils.php");
 
 /**
  * Classe astratta di definizione dei comandi eseguibile dal receiver (GenericServiceProvider)
@@ -93,10 +92,10 @@ class GetCatalinaHomeCommand  extends AbstractCommand {
 
   private function getCatalinaHomeFromTomcatScript($fileContent) {
 	preg_match('/(INSTANCE_)?NAME=.*/', $fileContent, $matches1);
-	if(!is_null($matches1)) {
+	if(!is_null($matches1) && is_array($matches1)) {
 	  $name = preg_replace('/(INSTANCE_)?NAME=/', '', $matches1[0]);
 	  preg_match('/CATALINA_HOME=.*/', $fileContent, $matches2);
-	  if(!is_null($matches2)) {
+	  if(!is_null($matches2) && is_array($matches2) ) {
 		$catalinaHome = preg_replace('/\$(INSTANCE_)?NAME/', $name, preg_replace('/CATALINA_HOME=/', '', $matches2[0]));
 		return trim(str_replace("\"","",$catalinaHome));
 	  }
@@ -296,7 +295,7 @@ class GetDatabaseRefCommand  extends AbstractCommand {
 	$tmp="";
 	foreach($connectionStringArr as $connectionString) /* processa ogni stringa di connessione */ {
 	  $ar=explode(':', $connectionString);
-	  if($ar) {
+	  if(is_array($ar) && sizeof($ar)>1) {
 		switch ($ar[1]) {
 		case "sybase":
 		  $tmp.=$ar[1]." ".$ar[3]." ".$ar[4];
@@ -310,8 +309,6 @@ class GetDatabaseRefCommand  extends AbstractCommand {
 		case "sqlserver":
 		  $tmp.=$ar[1]." ".str_replace("//","",$ar[2])." ".str_replace(";databaseName="," ",$ar[3]." ");
 		  break;
-		default:
-		  $tmp.=$str;
 		}
 	  }
 	}

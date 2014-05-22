@@ -37,7 +37,7 @@ class SSHServiceProvider extends GenericServiceProvider {
 
   private function checkAuthenticationMethod() {
 	$auth_methods = @ssh2_auth_none($this->connection, $this->user);
-	if (in_array('password', $auth_methods) or (in_array('keyboard-interactive', $auth_methods)) ) {
+	if (is_array($auth_methods) && (in_array('password', $auth_methods) or (in_array('keyboard-interactive', $auth_methods))) ) {
 	  return TRUE;
 	} else {
 	  throw new Exception("Server does not supports password based nor keyboard-interactive authentication");

@@ -20,23 +20,3 @@ interface DaoI {
   public function deleteByField($fieldName,$fieldValue);
 
 }
-
-interface HostsDAO extends DaoI {
-
-}
-
-interface InstancesDao extends DaoI {
-
-}
-
-interface InstancesHostsDao extends DaoI {
-
-}
-
-interface FeInstancesDao extends DaoI {
-
-}
-
-interface BeInstancesDao extends DaoI {
-
-}

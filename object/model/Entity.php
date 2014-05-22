@@ -3,11 +3,12 @@
 /**
  * Generic instance Entity
  **/
+
 abstract class GenericInstanceEntity {
   protected $instanceName;
   protected $instanceId;
 
-  public function __construct($instanceName) {
+  public function __construct($instanceName='') {
 	$this->instanceName=$instanceName;
   }
 
@@ -34,28 +35,10 @@ abstract class GenericInstanceEntity {
 }
 
 
-class InstancesEntity extends GenericInstanceEntity {
-  protected $instanceId;
-
-  public function __construct($instanceId) {
-	$this->instanceName;
-  }
-
-}
-
-class InstancesHostsEntity extends GenericInstanceEntity {
-
-  public function __construct($instanceId,$instanceName) {
-	$this->instanceId=$instanceId;
-	$this->instanceName=$instanceName;
-  }
-
-}
-
 /**
  * Singola istanza software di FE, una per ogni tomcat in esecuzione
  **/
-class FrontendInstanceEntity extends GenericInstanceEntity {
+class FrontendInstanceEntity extends GenericInstanceEntity  {
 
   protected $initScript; /* es. Tomcat script, /etc/init.d/tomcat.sh */
   protected $initScriptFileContent; /* Contenuto del file di init */
@@ -66,7 +49,7 @@ class FrontendInstanceEntity extends GenericInstanceEntity {
   protected $tcpIpPortsArray; /* Array delle porte utilizzate dal FE */
   protected $beInstanceArray; /* Array delle istanze di BE collegate al FE */
 
-  public function __construct($instanceName) {
+  public function __construct($instanceName='') {
 	parent::__construct($instanceName);
 	$this->initScript=$instanceName;
   }
@@ -188,7 +171,7 @@ class FrontendInstanceEntity extends GenericInstanceEntity {
 /**
  * Singola istanza software di BE, una per ogni SID
  **/
-class BackendInstanceEntity extends GenericInstanceEntity {
+class BackendInstanceEntity extends GenericInstanceEntity  {
 
   protected $oracleHome; /* es. /usr/local/tomcat6/  */
   protected $runningAtStartup; /* Instance running: true or false */
@@ -196,8 +179,8 @@ class BackendInstanceEntity extends GenericInstanceEntity {
   protected $isRunning; /* Instance running: true or false */
 
 
-  public function __construct($networkAddress) {
-	parent::__construct($networkAddress);
+  public function __construct($instanceName='') {
+	parent::__construct($instanceName);
   }
 
   public function setRunningAtStartup($runningAtStartup) {
@@ -224,13 +207,25 @@ class BackendInstanceEntity extends GenericInstanceEntity {
 	$this->isRunning=$isrunning;
   }
 
+  public function setExistsDatafile($existsDatafile) {
+	$this->existsDatafile=$existsDatafile;
+  }
+
+  public function getExistsDatafile() {
+	return $this->existsDatafile;
+  }
+
   public function __toString() {
 	return "Backend Instance Name: ".$this->getInstanceName();
   }
 
 }
 
-class HostEntity {
+
+/**
+ * Composite di entity.
+ **/
+class HostEntity  {
 
   protected $hostId;
   protected $networkAddress;
@@ -238,7 +233,7 @@ class HostEntity {
   protected $currentDate; /* System Date */
   protected $instanceList; /* GenericInstanceEntity [0..n] */
 
-  public function __construct($networkAddress) {
+  public function __construct($networkAddress='') {
 	$this->networkAddress=$networkAddress;
   }
 
@@ -281,7 +276,6 @@ class HostEntity {
   public function setInstanceList(array $instanceList) /* array di GenericInstanceEntity */ {
 	$this->instanceList=$instanceList;
   }
-
 
   public function addInstance(GenericInstanceEntity $instance) {
 	$this->instanceList[]= $instance;
