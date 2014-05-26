@@ -20,9 +20,6 @@ include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php"
 include_once( dirname(__FILE__) . "/object/model/DTO2EntityConverter.php" );
 
 
-ServiceScanOracleManager::loadFromDatabase();
-exit;
-
 // $instanceList= AccessManager::exportToArray(KEYSTORE);
 $instanceList= AccessManager::exportToArray(KEYSTORE_TEST);
 
@@ -52,9 +49,8 @@ $htmlReport=HostDTOFormatter::generateReport($dtoArray);
 $file = "/home/mpucci/Scrivania/report-fe.html";
 $result=file_put_contents($file, $htmlReport);
 
-// TODO scrivere il $dtoArray sul database
-ServiceScanOracleManager::writeToDatabase($dtoArray);
 
+ServiceScanOracleManager::writeToDatabase($dtoArray);
 
 
 // TODO generare il report leggendo il $dtoArray dal database

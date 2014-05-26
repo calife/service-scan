@@ -42,25 +42,38 @@ class OracleHostsDao extends OracleDao implements DaoI {
 
 	  /* Estrazione delle istanze collegate all' host */
 	  $result=$this->dbref->selectAll("select * from instances_hosts A, fe_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND A.host_id=:id",$parametri);
-	  print_r($result);
 	  foreach($result as $istanzaFe) {
 		$fe=new FrontendInstanceEntity();
-
+		$fe->setInstanceName($result[0]['INSTANCE_NAME']);
+		$fe->setInstanceId($result[0]['INSTANCE_ID']);
+		$fe->setInitScriptFileContent($result[0]['INITSCRIPTFILECONTENT']);
+		$fe->setCatalinaHome($result[0]['CATALINAHOME']);
+		$fe->setIsRunning($result[0]['ISRUNNING']);
+		$fe->setExistsDeploy($result[0]['EXISTSDEPLOY']);
+		$fe->setJavaCmdLine($result[0]['JAVACMDLINE']);
+		$fe->setTcpIpPortsArray($result[0]['TCPIPPORTSARRAY']);
+		$fe->setBeInstanceArray($result[0]['BEINSTANCEARRAY']);
 		$entity->addInstance($fe);
 	  }
-
-	  $result=$this->dbref->selectAll("select * from instances_hosts A, be_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND a.host_id):id",$parametri);
-	  foreach($result as $istanzaFe) {
-		$fe=new FrontendInstanceEntity();
-
-		$entity->addInstance($fe);
+	  $result=$this->dbref->selectAll("select * from instances_hosts A, be_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND a.host_id=:id",$parametri);
+	  foreach($result as $istanzaBe) {
+		$be=new BackendInstanceEntity();
+		$be->setInstanceId($result[0]['INSTANCE_ID']);
+		$be->setInstanceName($result[0]['INSTANCE_NAME']);
+		$be->setExistsDatafile($result[0]['EXISTSDATAFILE']);
+		$be->setRunningAtStartup($result[0]['RUNNINGATSTARTUP']);
+		$be->setOracleHome($result[0]['ORACLE_HOME']);
+		$be->setIsRunning($result[0]['ISRUNNING']);
+		$entity->addInstance($be);
 	  }
 
 	  return $entity;
 
 	} else {
-	  return null;
+	  $entity=null;
 	}
+
+	return $entity;
 
   }
 
@@ -80,6 +93,36 @@ class OracleHostsDao extends OracleDao implements DaoI {
 	  $entity->setHostname($result[$count]['HOST_NAME']);
 	  $entity->setCurrentDate($result[$count]['CURRENT_DATE']);
 	  $entity->setNetworkAddress($result[$count]['NETWORK_ADDRESS']);
+
+	  $parametri = array(':id' => $result[$count]['HOST_ID']);
+
+	  /* Estrazione delle istanze collegate all' host */
+	  $tmpresult=$this->dbref->selectAll("select * from instances_hosts A, fe_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND A.host_id=:id",$parametri);
+	  foreach($tmpresult as $istanzaFe) {
+
+	  	$fe=new FrontendInstanceEntity();
+	  	$fe->setInstanceName($istanzaFe['INSTANCE_NAME']);
+	  	$fe->setInstanceId($istanzaFe['INSTANCE_ID']);
+	  	$fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']);
+	  	$fe->setCatalinaHome($istanzaFe['CATALINAHOME']);
+	  	$fe->setIsRunning($istanzaFe['ISRUNNING']);
+	  	$fe->setExistsDeploy($istanzaFe['EXISTSDEPLOY']);
+	  	$fe->setJavaCmdLine($istanzaFe['JAVACMDLINE']);
+	  	$fe->setTcpIpPortsArray($istanzaFe['TCPIPPORTSARRAY']);
+	  	$fe->setBeInstanceArray($istanzaFe['BEINSTANCEARRAY']);
+	  	$entity->addInstance($fe);
+	  }
+	  $tmpresult=$this->dbref->selectAll("select * from instances_hosts A, be_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND a.host_id=:id",$parametri);
+	  foreach($tmpresult as $istanzaBe) {
+	  	$be=new BackendInstanceEntity();
+	  	$be->setInstanceId($istanzaBe['INSTANCE_ID']);
+	  	$be->setInstanceName($istanzaBe['INSTANCE_NAME']);
+	  	$be->setExistsDatafile($istanzaBe['EXISTSDATAFILE']);
+	  	$be->setRunningAtStartup($istanzaBe['RUNNINGATSTARTUP']);
+	  	$be->setOracleHome($istanzaBe['ORACLE_HOME']);
+	  	$be->setIsRunning($istanzaBe['ISRUNNING']);
+	  	$entity->addInstance($be);
+	  }
 
 	  $resultArray[]=$entity;
 
@@ -107,6 +150,36 @@ class OracleHostsDao extends OracleDao implements DaoI {
 	  $entity->setHostname($result[$count]['HOST_NAME']);
 	  $entity->setCurrentDate($result[$count]['CURRENT_DATE']);
 	  $entity->setNetworkAddress($result[$count]['NETWORK_ADDRESS']);
+
+	  $parametri = array(':id' => $result[$count]['HOST_ID']);
+
+	  /* Estrazione delle istanze collegate all' host */
+	  $tmpresult=$this->dbref->selectAll("select * from instances_hosts A, fe_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND A.host_id=:id",$parametri);
+	  foreach($tmpresult as $istanzaFe) {
+
+	  	$fe=new FrontendInstanceEntity();
+	  	$fe->setInstanceName($istanzaFe['INSTANCE_NAME']);
+	  	$fe->setInstanceId($istanzaFe['INSTANCE_ID']);
+	  	$fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']);
+	  	$fe->setCatalinaHome($istanzaFe['CATALINAHOME']);
+	  	$fe->setIsRunning($istanzaFe['ISRUNNING']);
+	  	$fe->setExistsDeploy($istanzaFe['EXISTSDEPLOY']);
+	  	$fe->setJavaCmdLine($istanzaFe['JAVACMDLINE']);
+	  	$fe->setTcpIpPortsArray($istanzaFe['TCPIPPORTSARRAY']);
+	  	$fe->setBeInstanceArray($istanzaFe['BEINSTANCEARRAY']);
+	  	$entity->addInstance($fe);
+	  }
+	  $tmpresult=$this->dbref->selectAll("select * from instances_hosts A, be_instances B where A.INSTANCE_ID=b.INSTANCE_ID AND a.host_id=:id",$parametri);
+	  foreach($tmpresult as $istanzaBe) {
+	  	$be=new BackendInstanceEntity();
+	  	$be->setInstanceId($istanzaBe['INSTANCE_ID']);
+	  	$be->setInstanceName($istanzaBe['INSTANCE_NAME']);
+	  	$be->setExistsDatafile($istanzaBe['EXISTSDATAFILE']);
+	  	$be->setRunningAtStartup($istanzaBe['RUNNINGATSTARTUP']);
+	  	$be->setOracleHome($istanzaBe['ORACLE_HOME']);
+	  	$be->setIsRunning($istanzaBe['ISRUNNING']);
+	  	$entity->addInstance($be);
+	  }
 
 	  $resultArray[]=$entity;
 

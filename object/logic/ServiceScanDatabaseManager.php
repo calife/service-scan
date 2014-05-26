@@ -48,7 +48,7 @@ class ServiceScanOracleManager implements AbstractServiceScanDatabaseManager {
 
 	$dtoArray=$hostDao->queryAll();
 
-	return array();
+	return $dtoArray;
   }
 
 }
