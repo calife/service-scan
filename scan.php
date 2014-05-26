@@ -17,8 +17,6 @@ include_once( dirname(__FILE__) . "/util/Keystore.php" );
 include_once( dirname(__FILE__) . "/object/logic/CredentialAccessManager.php" );
 include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php" );
 
-include_once( dirname(__FILE__) . "/object/model/DTO2EntityConverter.php" );
-
 $instanceList= AccessManager::exportToArray(KEYSTORE);
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
@@ -40,17 +38,3 @@ $scanner->addCommand(new QueryOratabFileCommand($serviceProvider));
 $scanner->addCommand(new AreOracleInstancesRunningCommand($serviceProvider));
 
 $dtoArray= $scanner->scan(); /* portata */
-
-print_r($dtoArray);
-
-$htmlReport=HostDTOFormatter::generateReport($dtoArray);
-$file = "/home/mpucci/Scrivania/report-fe.html";
-$result=file_put_contents($file, $htmlReport);
-
-
-ServiceScanOracleManager::writeToDatabase($dtoArray);
-
-
-// TODO generare il report leggendo il $dtoArray dal database
-
-
