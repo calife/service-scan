@@ -124,7 +124,7 @@ class FrontendInstanceEntity extends GenericInstanceEntity  {
    **/
   public function getJavaPropertyFromJavaCmdLine($property) {
 
-	$result;
+	$result="";
 	$javacmdline=$this->getJavaCmdLine();
 
 	if(! function_exists("getJavaProperty") ) /* because the declaration of the child function is inside the parent, 
