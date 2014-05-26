@@ -2,6 +2,7 @@
 
 require_once( dirname(__FILE__) . "/../../conf/database.conf" );
 require_once(dirname(__FILE__)."/../dao/DaoFactory.php");
+require_once( dirname(__FILE__) . "/../model/DTO2EntityConverter.php" );
 
 /**
  * Interfaccia di definizione dei metodi di accesso alla base dati per la memorizzazione
@@ -37,7 +38,7 @@ class ServiceScanOracleManager implements AbstractServiceScanDatabaseManager {
   }
 
   /**
-   * Lettera dal database 
+   * Lettera dell' array IDTO dal database 
    **/
   public static function loadFromDatabase() {
 
