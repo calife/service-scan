@@ -10,7 +10,7 @@ interface AbstractDTOFormatter {
 
 }
 
-class HostDTOFormatter implements AbstractDTOFormatter {
+class ServiceScanReportFormatter implements AbstractDTOFormatter {
 
   const runningNow="#3ee893"; /* green */
   const notRunningNow="#f2bb24"; /* orange */
