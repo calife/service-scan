@@ -2,7 +2,7 @@
 <?php
 
 /**
-  * Client di scansione delle macchine alla ricerca di servizi Fe e Be
+  * Client di scansione delle macchine alla ricerca di servizi Fe e Be , popola la banca dati con le informazioni raccolte
  **/
 
 require_once( dirname(__FILE__) . "/conf/app.conf" );
@@ -38,3 +38,7 @@ $scanner->addCommand(new QueryOratabFileCommand($serviceProvider));
 $scanner->addCommand(new AreOracleInstancesRunningCommand($serviceProvider));
 
 $dtoArray= $scanner->scan(); /* portata */
+if(DEBUG)
+  print_r($dtoArray);
+
+ServiceScanOracleManager::writeToDatabase($dtoArray);
