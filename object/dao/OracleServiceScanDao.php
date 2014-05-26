@@ -46,7 +46,9 @@ class OracleHostsDao extends OracleDao implements DaoI {
 		$fe=new FrontendInstanceEntity();
 		$fe->setInstanceName($result[0]['INSTANCE_NAME']);
 		$fe->setInstanceId($result[0]['INSTANCE_ID']);
-		$fe->setInitScriptFileContent($result[0]['INITSCRIPTFILECONTENT']);
+		/* $fe->setInitScriptFileContent($result[0]['INITSCRIPTFILECONTENT']); */
+		$fe->setInitScriptFileContent("");
+		$fe->setInitScript($result[0]['INITSCRIPT']);
 		$fe->setCatalinaHome($result[0]['CATALINAHOME']);
 		$fe->setIsRunning($result[0]['ISRUNNING']);
 		$fe->setExistsDeploy($result[0]['EXISTSDEPLOY']);
@@ -103,7 +105,9 @@ class OracleHostsDao extends OracleDao implements DaoI {
 	  	$fe=new FrontendInstanceEntity();
 	  	$fe->setInstanceName($istanzaFe['INSTANCE_NAME']);
 	  	$fe->setInstanceId($istanzaFe['INSTANCE_ID']);
-	  	$fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']);
+	  	/* $fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']); */
+		$fe->setInitScriptFileContent("");
+	  	$fe->setInitScript($istanzaFe['INITSCRIPT']);
 	  	$fe->setCatalinaHome($istanzaFe['CATALINAHOME']);
 	  	$fe->setIsRunning($istanzaFe['ISRUNNING']);
 	  	$fe->setExistsDeploy($istanzaFe['EXISTSDEPLOY']);
@@ -160,7 +164,9 @@ class OracleHostsDao extends OracleDao implements DaoI {
 	  	$fe=new FrontendInstanceEntity();
 	  	$fe->setInstanceName($istanzaFe['INSTANCE_NAME']);
 	  	$fe->setInstanceId($istanzaFe['INSTANCE_ID']);
-	  	$fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']);
+	  	/* $fe->setInitScriptFileContent($istanzaFe['INITSCRIPTFILECONTENT']); */
+		$fe->setInitScriptFileContent("");
+	  	$fe->setInitScript($istanzaFe['INITSCRIPT']);
 	  	$fe->setCatalinaHome($istanzaFe['CATALINAHOME']);
 	  	$fe->setIsRunning($istanzaFe['ISRUNNING']);
 	  	$fe->setExistsDeploy($istanzaFe['EXISTSDEPLOY']);
@@ -265,7 +271,8 @@ class OracleHostsDao extends OracleDao implements DaoI {
 
 		  $parametri = array(':instance_id'=>$instance_id,
 							 ':instance_name'=>$entity->getInstanceName(),
-							 ':initscriptfilecontent'=>$entity->getInitScript(),
+							 ':initscript'=>$entity->getInitScript(),
+							 ':initscriptfilecontent'=>$entity->getInitScriptFileContent(),
 							 ':catalinahome'=>$entity->getCatalinaHome(),
 							 ':isrunning'=>$entity->isRunning(),
 							 ':existsdeploy'=>$entity->getExistsDeploy(),
@@ -273,7 +280,7 @@ class OracleHostsDao extends OracleDao implements DaoI {
 							 ':tcpipportsarray'=>$entity->getTcpIpPortsArray(),
 							 ':beinstancearray'=>$entity->getBeInstanceArray());
 
-		  $success=$this->dbref->executeSQL(" insert into phpins.fe_instances(	instance_id,instance_name,initscriptfilecontent,catalinahome,isrunning,existsdeploy,javacmdline,tcpipportsarray,beinstancearray) values ( :instance_id,:instance_name,:initscriptfilecontent,:catalinahome,:isrunning,:existsdeploy,:javacmdline,:tcpipportsarray,:beinstancearray) ",$parametri);
+		  $success=$this->dbref->executeSQL(" insert into phpins.fe_instances(	instance_id,instance_name,initscript,initscriptfilecontent,catalinahome,isrunning,existsdeploy,javacmdline,tcpipportsarray,beinstancearray) values ( :instance_id,:instance_name,:initscript,:initscriptfilecontent,:catalinahome,:isrunning,:existsdeploy,:javacmdline,:tcpipportsarray,:beinstancearray) ",$parametri);
 
 		} else if($entity instanceof BackendInstanceEntity ) {
 
@@ -393,7 +400,9 @@ class FEOracleInstancesDao extends OracleDao implements DaoI {
 	  $entity= new FrontendInstanceEntity();
 	  $entity->setInstanceName($result[0]['INSTANCE_NAME']);
 	  $entity->setInstanceId($result[0]['INSTANCE_ID']);
-	  $entity->setInitScriptFileContent($result[0]['INITSCRIPTFILECONTENT']);
+	  /* $entity->setInitScriptFileContent($result[0]['INITSCRIPTFILECONTENT']); */
+	  $entity->setInitScriptFileContent("");
+	  $entity->setInitScript($istanzaFe['INITSCRIPT']);
 	  $entity->setCatalinaHome($result[0]['CATALINAHOME']);
 	  $entity->setIsRunning($result[0]['ISRUNNING']);
 	  $entity->setExistsDeploy($result[0]['EXISTSDEPLOY']);
@@ -422,7 +431,9 @@ class FEOracleInstancesDao extends OracleDao implements DaoI {
 	  $entity= new FrontendInstanceEntity();
 	  $entity->setInstanceName($result[$count]['INSTANCE_NAME']);
 	  $entity->setInstanceId($result[$count]['INSTANCE_ID']);
-	  $entity->setInitScriptFileContent($result[$count]['INITSCRIPTFILECONTENT']);
+	  /* $entity->setInitScriptFileContent($result[$count]['INITSCRIPTFILECONTENT']); */
+	  $entity->setInitScriptFileContent("");
+	  $entity->setInitScript("$result[$count]['INITSCRIPTFILECONTENT']");
 	  $entity->setCatalinaHome($result[$count]['CATALINAHOME']);
 	  $entity->setIsRunning($result[$count]['ISRUNNING']);
 	  $entity->setExistsDeploy($result[$count]['EXISTSDEPLOY']);
@@ -454,7 +465,9 @@ class FEOracleInstancesDao extends OracleDao implements DaoI {
 	  $entity= new FrontendInstanceEntity();
 	  $entity->setInstanceName($result[$count]['INSTANCE_NAME']);
 	  $entity->setInstanceId($result[$count]['INSTANCE_ID']);
-	  $entity->setInitScriptFileContent($result[$count]['INITSCRIPTFILECONTENT']);
+	  /* $entity->setInitScriptFileContent($result[$count]['INITSCRIPTFILECONTENT']); */
+	  $entity->setInitScriptFileContent("");
+	  $entity->setInitScript($result[$count]['INITSCRIPTFILECONTENT']);
 	  $entity->setCatalinaHome($result[$count]['CATALINAHOME']);
 	  $entity->setIsRunning($result[$count]['ISRUNNING']);
 	  $entity->setExistsDeploy($result[$count]['EXISTSDEPLOY']);
@@ -508,7 +521,8 @@ class FEOracleInstancesDao extends OracleDao implements DaoI {
 
 		$parametri = array(':instance_id'=>$instance_id,
 						   ':instance_name'=>$entity->getInstanceName(),
-						   ':initscriptfilecontent'=>$entity->getInitScript(),
+						   ':initscript'=>$entity->getInitScript(),
+						   ':initscriptfilecontent'=>$entity->getInitScriptFileContent(),
 						   ':catalinahome'=>$entity->getCatalinaHome(),
 						   ':isrunning'=>$entity->isRunning(),
 						   ':existsdeploy'=>$entity->getExistsDeploy(),
@@ -516,7 +530,7 @@ class FEOracleInstancesDao extends OracleDao implements DaoI {
 						   ':tcpipportsarray'=>$entity->getTcpIpPortsArray(),
 						   ':beinstancearray'=>$entity->getBeInstanceArray());
 
-		$success=$this->dbref->executeSQL(" insert into phpins.fe_instances(	instance_id,instance_name,initscriptfilecontent,catalinahome,isrunning,existsdeploy,javacmdline,tcpipportsarray,beinstancearray) values ( :instance_id,:instance_name,:initscriptfilecontent,:catalinahome,:isrunning,:existsdeploy,:javacmdline,:tcpipportsarray,:beinstancearray) ",$parametri);
+		$success=$this->dbref->executeSQL(" insert into phpins.fe_instances(	instance_id,instance_name,initscript,initscriptfilecontent,catalinahome,isrunning,existsdeploy,javacmdline,tcpipportsarray,beinstancearray) values ( :instance_id,:instance_name,:initscript,:initscriptfilecontent,:catalinahome,:isrunning,:existsdeploy,:javacmdline,:tcpipportsarray,:beinstancearray) ",$parametri);
 
 	  }
 
