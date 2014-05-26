@@ -115,7 +115,7 @@ class OracleDaoFactory extends GenericDAOFactory implements DaoFactoryI {
 }
 
 /**
- * Implementazione MySQL per la creazione dei Data Access Object (oggetti per l' accesso alla base dati per la singola entita')
+ * TODO: Implementazione MySQL per la creazione dei Data Access Object (oggetti per l' accesso alla base dati per la singola entita')
  **/
 class MySQLDaoFactory extends GenericDAOFactory implements DaoFactoryI {
 
@@ -132,7 +132,7 @@ class MySQLDaoFactory extends GenericDAOFactory implements DaoFactoryI {
   }
 
   /***
-   * Apre una connessione.
+   * TODO: Apre una connessione.
    * Il metodo deve essere invocato dopo aver caricato il driver appropriato con il metodo getInstance()
    **/
   public static function connect($host , $user , $pass , $type) {

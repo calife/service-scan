@@ -1,7 +1,7 @@
 <?php
 
 include_once( dirname(__FILE__) . "/../object/logic/ServiceScanDatabaseManager.php" );
-include_once( dirname(__FILE__) . "/../object/logic/DTOFormatter.php" );
+include_once( dirname(__FILE__) . "/../object/logic/ServiceScanReportFormatter.php" );
 include_once( dirname(__FILE__) . "/../object/model/DTO2EntityConverter.php" );
 
 $entities=ServiceScanOracleManager::loadFromDatabase();
@@ -12,6 +12,6 @@ foreach($entities as $entity) {
   $dtos[]=$dto;
 }
 
-$htmlReport=HostDTOFormatter::generateReport($dtos);
+$htmlReport=ServiceScanReportFormatter::generateReport($dtos);
 $file = "/home/mpucci/Scrivania/report-fe2.html";
 $result=file_put_contents($file, $htmlReport);

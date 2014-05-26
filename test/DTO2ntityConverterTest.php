@@ -9,7 +9,7 @@ require_once( dirname(__FILE__) . "/../conf/app.conf" );
 include_once( dirname(__FILE__) . "/../object/logic/ServiceProvider.php" );
 include_once( dirname(__FILE__) . "/../object/logic/ServiceScanner.php" );
 include_once( dirname(__FILE__) . "/../object/logic/Command.php" );
-include_once( dirname(__FILE__) . "/../object/logic/DTOFormatter.php" );
+include_once( dirname(__FILE__) . "/../object/logic/ServiceScanReportFormatter.php" );
 include_once( dirname(__FILE__) . "/../util/Utils.php" );
 include_once( dirname(__FILE__) . "/../util/Security.php" );
 include_once( dirname(__FILE__) . "/../util/Keystore.php" );
