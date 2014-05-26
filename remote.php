@@ -19,7 +19,6 @@ include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php"
 
 include_once( dirname(__FILE__) . "/object/model/DTO2EntityConverter.php" );
 
-
 $instanceList= AccessManager::exportToArray(KEYSTORE);
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
