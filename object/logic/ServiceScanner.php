@@ -1,7 +1,6 @@
 <?php
 
 include_once ( dirname(__FILE__) . "/../../conf/app.conf");
-include_once ( dirname(__FILE__) . "/../../conf/auth.conf");
 include_once ( dirname(__FILE__) . "/../../util/Utils.php");
 include_once ( dirname(__FILE__) . "/../model/Dto.php");
 
@@ -89,9 +88,11 @@ class ServiceScanner implements IScanner {
 	echo "### Inizio scansione host ".$host['ip']." ### ".PHP_EOL;
 
 	$provider=$this->sshServiceProvider;
+
 	$provider->connect($host['ip'],$host['port'],$host['user'],$host['pass']);
 
 	if($this->executeCommands($dto)) /* esegue i comandi sul singolo host, generic Data Transfer Object */ {
+
 	  $provider->disconnect();
 	  echo "### Fine scansione host "." ### ".PHP_EOL;
 

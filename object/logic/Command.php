@@ -92,7 +92,7 @@ class GetCatalinaHomeCommand  extends AbstractCommand {
 
   private function getCatalinaHomeFromTomcatScript($fileContent) {
 	preg_match('/(INSTANCE_)?NAME=.*/', $fileContent, $matches1);
-	if(!is_null($matches1) && is_array($matches1)) {
+	if(!is_null($matches1) && is_array($matches1) && sizeof($matches1)>0) {
 	  $name = preg_replace('/(INSTANCE_)?NAME=/', '', $matches1[0]);
 	  preg_match('/CATALINA_HOME=.*/', $fileContent, $matches2);
 	  if(!is_null($matches2) && is_array($matches2) ) {
