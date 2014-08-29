@@ -364,7 +364,7 @@ class Keystore {
 
 		$tempArray=self::exportCustom($data);
 
-		$clearData;
+		$clearData="";
 		foreach($tempArray as $row) {
 
 		  if($row['ip']!=$entry_by_ip)
@@ -409,7 +409,7 @@ class Keystore {
 
   private static function arrayToString($rows=array()) {
 
-	$clearData;
+	$clearData="";
 
 	foreach($rows as $row) {
 	  $clearData.=$row['ip'].",".$row['port'].",".$row['user'].",".$row['pass'].PHP_EOL;
