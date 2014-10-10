@@ -21,7 +21,7 @@ interface IScanner {
 /**
  * Classe di scansione delle istanze tomcat e oracle definite per ciascun host elencato in hosts
  **/
-class ServiceScanner implements IScanner {
+class SSHScanner implements IScanner {
 
   private $sshServiceProvider; /* fornisce accesso agli hosts */
 

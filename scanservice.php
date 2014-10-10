@@ -8,7 +8,7 @@
 require_once( dirname(__FILE__) . "/conf/app.conf" );
 
 include_once( dirname(__FILE__) . "/object/logic/ServiceProvider.php" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanner.php" );
+include_once( dirname(__FILE__) . "/object/logic/SSHScanner.php" );
 include_once( dirname(__FILE__) . "/object/logic/Command.php" );
 include_once( dirname(__FILE__) . "/object/logic/ServiceScanReportFormatter.php" );
 include_once( dirname(__FILE__) . "/util/Utils.php" );
@@ -21,7 +21,7 @@ $instanceList= AccessManager::exportToArray(KEYSTORE);
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
 
-$scanner=new ServiceScanner($instanceList,$serviceProvider); /* invoker , il cameriere */
+$scanner=new SSHScanner($instanceList,$serviceProvider); /* invoker , il cameriere */
 
 /* Passa all' invoker i comandi da eseguire */
 $scanner->addCommand(new GetHostnameCommand($serviceProvider));
