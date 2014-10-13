@@ -4,7 +4,8 @@ require_once( dirname(__FILE__) . "/../../util/Keystore.php" );
 require_once( dirname(__FILE__) . "/../../util/Utils.php" );
 
 /**
- * Interfaccia di definizione delle operazioni per la gestione delle liste delle istanze
+ * Interfaccia di definizione delle operazioni per la gestione delle liste delle istanze, dichiara l' interfaccia
+ * per l' accesso al keystore.
    ip_address,port_number,user,pass
  **/
 interface CredentialAccessInterface {

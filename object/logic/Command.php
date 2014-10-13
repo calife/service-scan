@@ -394,3 +394,12 @@ class AreOracleInstancesRunningCommand extends AbstractCommand {
 	return TRUE;
   }
 }
+
+
+/** Proxy specific commands **/
+
+// @TOOD : implmentare i comandi da eseguire sui proxy
+
+
+
+

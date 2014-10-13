@@ -10,11 +10,10 @@ require_once( dirname(__FILE__) . "/conf/app.conf" );
 include_once( dirname(__FILE__) . "/object/logic/ServiceProvider.php" );
 include_once( dirname(__FILE__) . "/object/logic/SSHScanner.php" );
 include_once( dirname(__FILE__) . "/object/logic/Command.php" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanReportFormatter.php" );
 include_once( dirname(__FILE__) . "/util/Utils.php" );
 include_once( dirname(__FILE__) . "/util/Keystore.php" );
 include_once( dirname(__FILE__) . "/object/logic/CredentialAccessManager.php" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php" );
+include_once( dirname(__FILE__) . "/object/logic/DatabaseManager.php" );
 
 $instanceList= AccessManager::exportToArray(KEYSTORE);
 

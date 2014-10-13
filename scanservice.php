@@ -13,7 +13,7 @@ include_once( dirname(__FILE__) . "/object/logic/Command.php" );
 include_once( dirname(__FILE__) . "/util/Utils.php" );
 include_once( dirname(__FILE__) . "/util/Keystore.php" );
 include_once( dirname(__FILE__) . "/object/logic/CredentialAccessManager.php" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php" );
+include_once( dirname(__FILE__) . "/object/logic/DatabaseManager.php" );
 
 
 $instanceList= AccessManager::exportToArray(KEYSTORE);
@@ -42,6 +42,6 @@ if(DEBUG)
   print_r($dtoArray);
 
 
-ServiceScanOracleManager::writeToDatabase($dtoArray);
+OracleManager::writeToDatabase($dtoArray);
 
 

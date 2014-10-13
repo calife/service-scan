@@ -8,14 +8,14 @@ require_once( dirname(__FILE__) . "/../model/DTO2EntityConverter.php" );
  * Interfaccia di definizione dei metodi di accesso alla base dati per la memorizzazione
  * delle istanze scansionate.
  **/
-interface AbstractServiceScanDatabaseManager {
+interface AbstractDatabaseManager {
 
   public static function writeToDatabase(array $dtos); /* Popola la base dati con le informazioni censite */
-  public static function loadFromDatabase(); /* Legge dalla base dati le informazioni censite */
+  public static function readFromDatabase(); /* Legge dalla base dati le informazioni censite */
 
 }
 
-class ServiceScanOracleManager implements AbstractServiceScanDatabaseManager {
+class OracleManager implements AbstractDatabaseManager {
 
   /**
    * Scrittura dell' array dto sul database
@@ -38,9 +38,9 @@ class ServiceScanOracleManager implements AbstractServiceScanDatabaseManager {
   }
 
   /**
-   * Lettera dell' array IDTO dal database 
+   * Lettera dell' array IDTO dal database
    **/
-  public static function loadFromDatabase() {
+  public static function readFromDatabase() {
 
 	$daoFactory = OracleDaoFactory::getInstance(); /* Esegue il caricamento del driver */
 	$daoFactory->connect(CONNECTION_STRING , ORA_CON_USERNAME , ORA_CON_PW , ORA_CONNECTION_TYPE_CONNECT);  /* Ottiene una connessione da passare al dao */

@@ -6,11 +6,11 @@
  **/
 
 require_once( dirname(__FILE__) . "/conf/app.conf" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanReportFormatter.php" );
-include_once( dirname(__FILE__) . "/object/logic/ServiceScanDatabaseManager.php" );
+include_once( dirname(__FILE__) . "/object/logic/ReportFormatter.php" );
+include_once( dirname(__FILE__) . "/object/logic/DatabaseManager.php" );
 
 
-$entities=ServiceScanOracleManager::loadFromDatabase();
+$entities=OracleManager::readFromDatabase();
 
 $dtos=array();
 foreach($entities as $entity) {
@@ -21,6 +21,6 @@ foreach($entities as $entity) {
 if(DEBUG)
   print_r($dtos);
 
-$htmlReport=ServiceScanReportFormatter::generateReport($dtos);
+$htmlReport=ReportFormatter::generateReport($dtos);
 $file = "/home/mpucci/Scrivania/report-fe.html";
 $result=file_put_contents($file, $htmlReport);
