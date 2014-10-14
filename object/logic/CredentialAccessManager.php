@@ -4,11 +4,10 @@ require_once( dirname(__FILE__) . "/../../util/Keystore.php" );
 require_once( dirname(__FILE__) . "/../../util/Utils.php" );
 
 /**
- * Interfaccia di definizione delle operazioni per la gestione delle liste delle istanze, dichiara l' interfaccia
- * per l' accesso al keystore.
+ * Interfaccia di definizione delle operazioni per la gestione delle credenziali di accesso al singolo host.
    ip_address,port_number,user,pass
  **/
-interface CredentialAccessInterface {
+interface HostAccessInterface {
 
   public function getAddress();
   public function getPort();
@@ -17,24 +16,8 @@ interface CredentialAccessInterface {
 
 }
 
-interface AccessManagerInterface {
 
-  public static function create($keystore,$clearfile); /* crea un keystore utilizzando il clearfile */
-  public static function delete($keystore); /* cancella un keystore */
-  public static function show($keystore); /* visualizza il contenuto del keystore */
-  public static function export($keystore,$clearfile); /* esporta il contenuto del keystore su un file di testo */
-  public static function changekeypasswd($keystore); /* cambia la chiave del keystore */
-  public static function exportToArray($keystore); /* esporta il contenuto del keystore in array */
-  public static function verify($keystore,$funz=null); /* ritorna true se il keystore e' valido */
-  public static function sort($keystore,$funz=null);
-  public static function removedup($keystore,$funz=null);
-
-  public static function addentry($keystore,$entry); /* aggiunge un' entry al keystore */
-  public static function removeentry($keystore,$entry); /* rimuove un' entry dal keystore */
-
-}
-
-class CredentialAccess implements CredentialAccessInterface {
+class HostAccess implements HostAccessInterface {
 
   private $address;
   private $port;
@@ -81,6 +64,28 @@ class CredentialAccess implements CredentialAccessInterface {
 	$check=true;
 	return true;
   }
+
+}
+
+
+
+/**
+ * Interfaccia di definizione delle operazioni per la gestione del keystore.
+ **/
+interface AccessManagerInterface {
+
+  public static function create($keystore,$clearfile); /* crea un keystore utilizzando il clearfile */
+  public static function delete($keystore); /* cancella un keystore */
+  public static function show($keystore); /* visualizza il contenuto del keystore */
+  public static function export($keystore,$clearfile); /* esporta il contenuto del keystore su un file di testo */
+  public static function changekeypasswd($keystore); /* cambia la chiave del keystore */
+  public static function exportToArray($keystore); /* esporta il contenuto del keystore in array */
+  public static function verify($keystore,$funz=null); /* ritorna true se il keystore e' valido */
+  public static function sort($keystore,$funz=null);
+  public static function removedup($keystore,$funz=null);
+
+  public static function addentry($keystore,$entry); /* aggiunge un' entry al keystore */
+  public static function removeentry($keystore,$entry); /* rimuove un' entry dal keystore */
 
 }
 
@@ -157,7 +162,7 @@ class AccessManager implements AccessManagerInterface {
   }
 
   /**
-   * Restituisce un array di CredentialAccessInterface Objects, ordinato e senza duplicati
+   * Restituisce un array di HostAccessInterface Objects, ordinato e senza duplicati
    **/
   public static function exportToArray($keystore) {
 
@@ -168,7 +173,7 @@ class AccessManager implements AccessManagerInterface {
   }
 
   /**
-   * Restituisce un array di CredentialAccessInterface Objects, senza ordinarli e con eventuali duplicati
+   * Restituisce un array di HostAccessInterface Objects, senza ordinarli e con eventuali duplicati
    **/
   protected  static function exportToBareArray($keystore) {
 
@@ -178,7 +183,7 @@ class AccessManager implements AccessManagerInterface {
 	$rows=explode(PHP_EOL, $clearData);
 	foreach($rows as $row) {
 	  $tmp=explode(',',$row);
-	  $credential= new CredentialAccess($tmp[0],$tmp[1],$tmp[2],$tmp[3]);
+	  $credential= new HostAccess($tmp[0],$tmp[1],$tmp[2],$tmp[3]);
 	  $paramsArray[]=$credential->toArray();
 	}
 
@@ -193,7 +198,7 @@ class AccessManager implements AccessManagerInterface {
 
 	if(is_null($funz)) {
 	  $funz = function($parametro) {
-		return CredentialAccess::check($parametro);
+		return HostAccess::check($parametro);
       };
 	}
 
@@ -205,7 +210,7 @@ class AccessManager implements AccessManagerInterface {
 
 	  $tmp=explode(',',$row);
 
-	  $credential= new CredentialAccess($tmp[0],$tmp[1],$tmp[2],$tmp[3]);
+	  $credential= new HostAccess($tmp[0],$tmp[1],$tmp[2],$tmp[3]);
 
 	  if(!$funz($credential)) {
 		$verified=false;
