@@ -1,5 +1,3 @@
-#!/usr/bin/php
-
 <?php
 
 include_once( dirname(__FILE__) . "/../object/logic/CredentialAccessManager.php" );
@@ -7,13 +5,21 @@ include_once( dirname(__FILE__) . "/../object/logic/CredentialAccessManager.php"
 interface ICommandLineParser {
 
   static function help(); /* Stampa l' help */
-  static function processCmdLine(array $options); /* Processa la command line */
+  static function processCmdLine(); /* Processa la command line */
 
 }
 
 class Keytool implements ICommandLineParser {
 
-  public static function processCmdLine(array $options) /* command dispatcher */ {
+  public static function processCmdLine() /* command dispatcher */ {
+
+	$options = getopt(null,array(
+								 "action:", // required
+								 "keystore:",
+								 "clearfile:",
+								 "entry:",
+								 "help"
+								 ));
 
 	if (is_array($options) ) {
 	  
@@ -119,14 +125,3 @@ EOT;
   }
 
 }
-
-$longopts  = array(
-    "action:", // required
-    "keystore:",
-    "clearfile:",
-    "entry:",
-    "help"
-);
-
-$options = getopt(null,$longopts);
-Keytool::processCmdLine($options);
