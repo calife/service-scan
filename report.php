@@ -1,9 +1,9 @@
 #!/usr/bin/php
-<?php
+   <?php
 
-/**
-  * Genera un report aggiornato con la situazione delle istanza di Fe e Be
- **/
+   /** 
+	* Genera un report aggiornato con la situazione delle istanza di Fe e Be
+	**/
 
 require_once( dirname(__FILE__) . "/conf/app.conf" );
 include_once( dirname(__FILE__) . "/object/logic/ReportFormatter.php" );
@@ -23,4 +23,8 @@ if(DEBUG)
 
 $htmlReport=ReportFormatter::generateReport($dtos);
 $file = "/home/mpucci/Scrivania/report-fe.html";
-$result=file_put_contents($file, $htmlReport);
+               
+
+
+
+$result=file_put_contents($file,$htmlReport);

@@ -14,12 +14,14 @@ include_once( dirname(__FILE__) . "/util/Utils.php" );
 include_once( dirname(__FILE__) . "/util/Keystore.php" );
 include_once( dirname(__FILE__) . "/object/logic/CredentialAccessManager.php" );
 include_once( dirname(__FILE__) . "/object/logic/DatabaseManager.php" );
+include_once( dirname(__FILE__) . "/object/logic/HostAccessIteratorInterface.php");
 
 
 $instanceList= AccessManager::exportToArray(KEYSTORE);
 
 $serviceProvider=new SSHServiceProvider(); /* receiver , il cuoco */
 
+// @TODO invece dell' instanceList passare un HostAccessIteratorInterface
 $scanner=new SSHScanner($instanceList,$serviceProvider); /* invoker , il cameriere */
 
 /* Passa all' invoker i comandi da eseguire */
