@@ -1,0 +1,57 @@
+
+
+***********************************************************************
+Fatal NI connect error 12541, connecting to:
+ (DESCRIPTION=(CONNECT_DATA=(SERVICE_NAME=xe)(CID=(PROGRAM=php@mpucci-ub10)(HOST=mpucci-ub10)(USER=mpucci)))(ADDRESS=(PROTOCOL=TCP)(HOST=127.0.0.1)(PORT=1521)))
+
+  VERSION INFORMATION:
+	TNS for Linux: Version 10.2.0.1.0 - Production
+	TCP/IP NT Protocol Adapter for Linux: Version 10.2.0.1.0 - Production
+  Time: 09-OCT-2014 11:57:55
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12541
+    TNS-12541: TNS:no listener
+    ns secondary err code: 12560
+    nt main err code: 511
+    TNS-00511: No listener
+    nt secondary err code: 111
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12560, connecting to:
+ (DESCRIPTION=(CONNECT_DATA=(SERVICE_NAME=supportosv)(CID=(PROGRAM=php@mpucci-ub10)(HOST=mpucci-ub10)(USER=mpucci)))(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.1.36)(PORT=1521)))
+
+  VERSION INFORMATION:
+	TNS for Linux: Version 10.2.0.1.0 - Production
+	TCP/IP NT Protocol Adapter for Linux: Version 10.2.0.1.0 - Production
+  Time: 15-FEB-2016 08:29:48
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12560
+    TNS-12560: TNS:protocol adapter error
+    ns secondary err code: 0
+    nt main err code: 530
+    TNS-00530: Protocol adapter error
+    nt secondary err code: 113
+    nt OS err code: 0
+
+
+***********************************************************************
+Fatal NI connect error 12560, connecting to:
+ (DESCRIPTION=(CONNECT_DATA=(SERVICE_NAME=supportosv)(CID=(PROGRAM=php@mpucci-ub10)(HOST=mpucci-ub10)(USER=mpucci)))(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.1.36)(PORT=1521)))
+
+  VERSION INFORMATION:
+	TNS for Linux: Version 10.2.0.1.0 - Production
+	TCP/IP NT Protocol Adapter for Linux: Version 10.2.0.1.0 - Production
+  Time: 15-FEB-2016 08:57:08
+  Tracing not turned on.
+  Tns error struct:
+    ns main err code: 12560
+    TNS-12560: TNS:protocol adapter error
+    ns secondary err code: 0
+    nt main err code: 530
+    TNS-00530: Protocol adapter error
+    nt secondary err code: 113
+    nt OS err code: 0
